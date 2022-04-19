@@ -1,0 +1,9 @@
+{
+  "name": "editer_for_my_github_blog",
+  "version": "0.0.0",
+  "dependencies": {
+    "@toast-ui/editor": "^3.1.4",
+    "exif-parser": "^0.1.12",
+    "onweb": "^0.0.3"
+  }
+}

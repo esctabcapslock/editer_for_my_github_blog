@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Toast UI Editor -->
+	<link rel="stylesheet" href="cdn/toastui-editor.min.css" />
+	<!-- <link rel="stylesheet" href="cdn/toastui-editor-plugin-code-syntax-highlight.min.css" /> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"/> -->
+    <script src="cdn/toastui-editor-all.min.js"></script>
+    <!-- <script src="cdn/toastui-editor-plugin-code-syntax-highlight.min.js"></script> -->
+    <script src="copy2.js"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [["$","$"],["\(","\)"]]
+          }
+        });
+      </script>
+      <script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+      </script>
+    <!-- 11.5.0 -->
+    <link rel="stylesheet" href="cdn/xcode.min.css">
+    <script src="cdn/highlight.min.js"></script>
+    
+  <script>hljs.highlightAll();</script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>글쓰기??</h1>
+    <header id="header">
+        <form id="submit" action="http://localhost:8081" method="post" target="">
+            <input type="hidden" name="layout" value="post">
+            <label for="btn_title">제목</label><input type="text" name="title" id="btn_title">
+            <label for="btn_mathjax">mathjax</label><input type="checkbox" name="mathjax" id="btn_mathjax" checked="false">
+            <label for="btn_highlightjs">highlightjs</label><input type="checkbox" name="highlightjs" id="btn_highlightjs"
+                checked="false">
+            <!-- <label for="btn_category">category</label><input type="text" name="category" id="btn_category" value="기타"> -->
+            <label for="btn_category">category</label>
+    
+            <select id="btn_category" form="submit">
+            </select>
+            <script>
+                const category_list = ['기타', '웹', '클라우드', '개발', 'Python']
+                document.getElementById('btn_category').innerHTML = category_list.map(v => `<option value="${v}">${v}</option>`)
+            </script>
+    
+            <input type="hidden" name="body" id="btn_body" value="">
+            <input type="submit" value="copy">
+        </form>
+        <button id="input_pre">입력</button>
+    </header>
+    <div id="editor"></div>
+    <script>
+        const Editor = toastui.Editor;
+        // const codeSyntaxHighlight = Editor.plugin.codeSyntaxHighlight
+            const editor =  Editor.factory({
+                el: document.querySelector('#editor'),
+                height: '600px',
+                initialEditType: 'markdown',
+                previewStyle: 'vertical',
+                // plugins:[codeSyntaxHighlight]
+            });
+    </script>
+    
+    <script>
+        const form = document.querySelector('#submit')
+        document.querySelector('#editor').addEventListener('keyup',e=>{
+            const  md = editor.getMarkdown()
+            const reg = /#([ \t]+[^\n]*)/
+            document.getElementById('btn_body').value = md.replace(reg,'')
+            const title = md.match(reg)
+            if(title) document.getElementById('btn_title').value  =  title[1].trim()
+
+            // 수식 변환
+            if(document.getElementById('btn_mathjax').checked)
+                MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.querySelector('.toastui-editor-md-preview')])()
+
+            const list = document.getElementsByTagName('code')
+            if(list){
+                for (const ele of list) if(ele.children.length==0) hljs.highlightElement(ele)
+            }
+            // 
+        })
+        form.addEventListener('submit',e=>{
+            e.preventDefault()
+            const out = {}
+            for (const i of form.querySelectorAll('input')) if(i.name){
+                if(i.type!='checkbox') out[i.name] = i.value
+                else out[i.name] = i.checked
+            } 
+            out['category'] = document.getElementById('btn_category').value
+            const data = `---
+layout: ${out.layout}
+mathjax: ${out.mathjax}
+highlightjs: ${out.highlightjs}
+title: "${out.title}"
+category: "${out.category}"
+---
+${out.body}
+`
+console.log(data)
+copy2(data)
+        })
+
+        function parsetitle(str){
+            const ar =  str.split(/^-{3,}|(?<=\n)-{3,}/gi)
+            console.log(str,ar)
+            const title = ar[1].match(/title:(\s*)("?)([^"]+)("?)/)[3].trim()
+            // const title = ar[1].match(/title:(\s*)"(.+)"/)[2]
+            const body = `# ${title}`+'\n'+ar[2].trim()
+            if(title) document.getElementById('btn_title').value  =  title
+            editor.setMarkdown(body)
+            const category = ar[1].match(/category:(\s*)("?)([^"]+)("?)/)[3].trim()
+            document.getElementById('btn_category').value = category
+        }
+    </script>
+
+    <script>
+        const input_pre = document.getElementById('input_pre')
+        const header = document.getElementById('header')
+        input_pre.addEventListener('click',e=>{
+            input_pre.disabled = true
+            const t = document.createElement("textarea");
+            
+            header.appendChild(t);
+            console.log(t,input_pre, header.appendChild(t))
+            // document.body.appendChild(t);
+            t.addEventListener('change',()=>{
+                input_pre.disabled = false
+                const data = t.value
+                t.remove()
+                try{
+                    parsetitle(data)
+                }catch(e){alert(e)}
+            })
+            // document.body.removeChild(t);
+        })
+    </script>
+</body>
+</html>
+<!-- ---
+layout: post
+mathjax: false
+highlightjs: true
+title: "sdfbg"
+category: Python
+--- -->

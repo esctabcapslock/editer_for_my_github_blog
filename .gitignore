@@ -1,0 +1,10 @@
+.idea/
+node_modules/
+article/
+file/
+node_modules/
+static/
+package-lock.json
+*.zip
+article_list.json
+img/
