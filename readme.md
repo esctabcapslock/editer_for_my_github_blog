@@ -1,6 +1,7 @@
 # 깃헙 블로그를 위한 에디터 (2022.04.20 4h)
 - 기존 에디터는 사진 첨부할떄 귀찮음
 - 위에 설정정보 쓰는것도 귀찮어
+- [보러가기](https://esctabcapslock.github.io/editer_for_my_github_blog/asset/index.html)
 
 ## 토스트 에디터 관련
 - [토스트 API](https://shanepark.tistory.com/126)
