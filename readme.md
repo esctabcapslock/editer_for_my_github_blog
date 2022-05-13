@@ -5,8 +5,8 @@
 
 ## 토스트 에디터 관련
 - [토스트 API](https://shanepark.tistory.com/126)
-- [문서?]](https://github.com/nhn/tui.editor/tree/master/apps/editor)
-- [문서?]](https://ui.toast.com/tui-editor)
+- [문서?](https://github.com/nhn/tui.editor/tree/master/apps/editor)
+- [문서?](https://ui.toast.com/tui-editor)
 
 ## 기타 종속성
 - [highlightjs](https://highlightjs.org/)
