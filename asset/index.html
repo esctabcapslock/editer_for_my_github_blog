@@ -24,12 +24,13 @@
     <!-- 11.5.0 -->
     <link rel="stylesheet" href="cdn/xcode.min.css">
     <script src="cdn/highlight.min.js"></script>
+    <script src="cdn/languages/wasm.min.js"></script>
     
   <script>hljs.highlightAll();</script>
     <title>Document</title>
 </head>
 <body>
-    <h1>글쓰기??</h1>
+    <h1>깃헙 블로그를 위한 에디터</h1>
     <header id="header">
         <form id="submit" action="http://localhost:8081" method="post" target="">
             <input type="hidden" name="layout" value="post">
@@ -43,7 +44,7 @@
             <select id="btn_category" form="submit">
             </select>
             <script>
-                const category_list = ['기타', '웹', '클라우드', '개발', 'Python','Javascript', 'Rust', 'C/C++',  'Java']
+                const category_list = ['기타', '웹', '클라우드', '개발', 'Python','Javascript', 'Rust', 'C/C++',  'Java', 'WebAssembly']
                 document.getElementById('btn_category').innerHTML = category_list.map(v => `<option value="${v}">${v}</option>`)
             </script>
     
