@@ -4,23 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="깃헙 블로그를 위한 에디터">
      <!-- Toast UI Editor -->
 	<link rel="stylesheet" href="cdn/toastui-editor.min.css" />
 	<!-- <link rel="stylesheet" href="cdn/toastui-editor-plugin-code-syntax-highlight.min.css" /> -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"/> -->
-    <script src="cdn/toastui-editor-all.min.js"></script>
+    <script src="./cdn/toastui-editor-all.min.js"></script>
     <!-- <script src="cdn/toastui-editor-plugin-code-syntax-highlight.min.js"></script> -->
     <script src="copy2.js"></script>
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-          tex2jax: {
-            inlineMath: [["$","$"],["\(","\)"]]
-          }
-        });
-      </script>
-      <script type="text/javascript"
-        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
-      </script>
+   
+
+
+<script>
+
+
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+  svg: {
+    fontCache: 'global'
+  }
+};
+</script>
+<!--<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>-->
+<script type="text/javascript" id="MathJax-script" async
+  src="cdn/MathJax.js">
+</script>
+
+
+
     <!-- 11.5.0 -->
     <link rel="stylesheet" href="cdn/xcode.min.css">
     <script src="cdn/highlight.min.js"></script>
@@ -32,7 +47,7 @@
 <body>
     <h1>깃헙 블로그를 위한 에디터</h1>
     <header id="header">
-        <form id="submit" action="http://localhost:8081" method="post" target="">
+        <form id="submit" action="/" method="post" target="">
             <input type="hidden" name="layout" value="post">
             <label for="btn_title">제목</label><input type="text" name="title" id="btn_title">
             <label for="btn_mathjax">mathjax</label><input type="checkbox" name="mathjax" id="btn_mathjax" checked="false">

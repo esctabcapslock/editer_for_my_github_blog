@@ -8,3 +8,4 @@ package-lock.json
 *.zip
 article_list.json
 img/
+*.xlsx
