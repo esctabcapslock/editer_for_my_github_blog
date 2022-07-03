@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클립보드 이미지 Base64로 저장하기</title>
+    <script src="./copy2.js"></script>
+</head>
+<body>
+    <main>
+        <button id="btn_copy">복사</button>
+    </main>
+    <script>
+document.body.addEventListener('paste', (e) => {
+event.preventDefault();
+
+const clipboard = (e.clipboardData || window.clipboardData)
+const files = clipboard.files
+if(files.length){
+    const blob = files[0]
+    const type = blob.type
+    console.log(blob,type)
+    const reader  = new FileReader(blob)
+    reader.readAsDataURL(blob)
+    reader.addEventListener('load', (e)=>{
+        // console.log(e,'fr onload' , reader.result)
+        const base64data = reader.result
+        copy2(base64data)
+
+    });
+    
+    
+
+}else console.log('no file', clipboard.getData('text'))
+// paste = paste.toUpperCase();
+// const selection = window.getSelection();
+// if (!selection.rangeCount) return;
+// selection.deleteFromDocument();
+// selection.getRangeAt(0).insertNode(document.createTextNode(paste));
+});
+    </script>
+</body>
+</html>
