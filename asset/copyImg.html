@@ -6,18 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>클립보드 이미지 Base64로 저장하기</title>
     <script src="./copy2.js"></script>
+    <style>
+        img{
+            max-height: 70vh;
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
     <main>
         <button id="btn_copy">복사</button>
+        <div ><span id="output"></span><img id="inputIMG"></div>
     </main>
     <script>
+
+const $output = document.getElementById('output')
 document.body.addEventListener('paste', (e) => {
 event.preventDefault();
-
+$output.textContent = '처리중'
 const clipboard = (e.clipboardData || window.clipboardData)
 const files = clipboard.files
 if(files.length){
+    $output.textContent = '파일 확인됨'
     const blob = files[0]
     const type = blob.type
     console.log(blob,type)
@@ -25,14 +35,25 @@ if(files.length){
     reader.readAsDataURL(blob)
     reader.addEventListener('load', (e)=>{
         // console.log(e,'fr onload' , reader.result)
+        $output.textContent = 'base64 URL 생성 완료'
         const base64data = reader.result
+        document.getElementById('inputIMG').src = base64data
         copy2(base64data)
+        $output.textContent = '복사 완료'
 
     });
-    
+document.getElementById('btn_copy').addEventListener('click',e=>{
+    copy2(document.getElementById('inputIMG').src)
+})    
     
 
-}else console.log('no file', clipboard.getData('text'))
+}else {
+    $output.innerText = '이미지 없음!'
+    $output.innerHTML += '<br>'
+    $output.innerText += clipboard.getData('text')
+    document.getElementById('inputIMG').src = undefined
+    console.log('no file', clipboard.getData('text'))
+}
 // paste = paste.toUpperCase();
 // const selection = window.getSelection();
 // if (!selection.rangeCount) return;
